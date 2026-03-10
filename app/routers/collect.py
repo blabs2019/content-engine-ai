@@ -62,39 +62,6 @@ async def _get_vertical(vertical_id: int, db: AsyncSession) -> Vertical:
 # --- Trigger endpoints ---
 
 
-@router.post("/collect/{platform}/{vertical_id}", response_model=CollectionTriggerResponse)
-async def trigger_platform_collection(
-    platform: str,
-    vertical_id: int,
-    keywords: list[str] = Query(default=[]),
-    db: AsyncSession = Depends(get_db),
-):
-    if platform not in VALID_PLATFORMS:
-        raise HTTPException(status_code=400, detail=f"Invalid platform. Must be one of: {VALID_PLATFORMS}")
-
-    vertical = await _get_vertical(vertical_id, db)
-
-    client = await get_temporal_client()
-    wf_class = PLATFORM_WORKFLOW_MAP[platform]
-    input_data = CollectionInput(vertical_id=vertical_id, keywords=keywords, vertical_name=vertical.name)
-
-    workflow_id = f"collect-{platform}-v{vertical_id}-{datetime.utcnow().strftime('%Y%m%dT%H%M%S')}"
-
-    await client.start_workflow(
-        wf_class.run,
-        input_data,
-        id=workflow_id,
-        task_queue=settings.TEMPORAL_TASK_QUEUE,
-    )
-
-    return CollectionTriggerResponse(
-        workflow_id=workflow_id,
-        platform=platform,
-        vertical_id=vertical_id,
-        status="started",
-    )
-
-
 @router.post("/collect/all/{vertical_id}", response_model=MasterCollectionTriggerResponse)
 async def trigger_all_platform_collection(
     vertical_id: int,
@@ -104,7 +71,8 @@ async def trigger_all_platform_collection(
     vertical = await _get_vertical(vertical_id, db)
 
     client = await get_temporal_client()
-    input_data = CollectionInput(vertical_id=vertical_id, keywords=keywords, vertical_name=vertical.name)
+    effective_keywords = keywords if keywords else [vertical.name]
+    input_data = CollectionInput(vertical_id=vertical_id, keywords=effective_keywords, vertical_name=vertical.name)
 
     workflow_id = f"collect-all-v{vertical_id}-{datetime.utcnow().strftime('%Y%m%dT%H%M%S')}"
 
@@ -119,6 +87,40 @@ async def trigger_all_platform_collection(
         workflow_id=workflow_id,
         vertical_id=vertical_id,
         platforms=VALID_PLATFORMS,
+        status="started",
+    )
+
+
+@router.post("/collect/{platform}/{vertical_id}", response_model=CollectionTriggerResponse)
+async def trigger_platform_collection(
+    platform: str,
+    vertical_id: int,
+    keywords: list[str] = Query(default=[]),
+    db: AsyncSession = Depends(get_db),
+):
+    if platform not in VALID_PLATFORMS:
+        raise HTTPException(status_code=400, detail=f"Invalid platform. Must be one of: {VALID_PLATFORMS}")
+
+    vertical = await _get_vertical(vertical_id, db)
+
+    client = await get_temporal_client()
+    wf_class = PLATFORM_WORKFLOW_MAP[platform]
+    effective_keywords = keywords if keywords else [vertical.name]
+    input_data = CollectionInput(vertical_id=vertical_id, keywords=effective_keywords, vertical_name=vertical.name)
+
+    workflow_id = f"collect-{platform}-v{vertical_id}-{datetime.utcnow().strftime('%Y%m%dT%H%M%S')}"
+
+    await client.start_workflow(
+        wf_class.run,
+        input_data,
+        id=workflow_id,
+        task_queue=settings.TEMPORAL_TASK_QUEUE,
+    )
+
+    return CollectionTriggerResponse(
+        workflow_id=workflow_id,
+        platform=platform,
+        vertical_id=vertical_id,
         status="started",
     )
 
