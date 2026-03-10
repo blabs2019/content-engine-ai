@@ -207,7 +207,7 @@ async def get_vertical_collected_data(
                 for name in names:
                     hashtags.append(HashtagItem(
                         name=name,
-                        posts_count=name_to_count.get(name, 0),
+                        posts_count=int(name_to_count.get(name, 0)),
                     ))
             except Exception:
                 pass
