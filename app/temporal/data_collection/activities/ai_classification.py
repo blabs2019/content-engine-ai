@@ -63,16 +63,19 @@ def _map_back(ranked_idxs: list[str], idx_to_sid: dict) -> list[str]:
 async def classify_collected_data(input: ClassificationInput) -> ClassificationResult:
     """Single-mode AI classification activity.
 
+    Uses flag-based updates to preserve raw_data saved by scrapers.
+
     mode="trending":
-      1. Clear old data for vertical_id + source
+      1. Reset is_trending=False for all rows
       2. Filter to recent items only
       3. AI call with trending prompt (viral/buzzy)
-      4. Save keepers with is_trending=True
+      4. Upsert keepers with is_trending=True
 
     mode="all_time":
-      1. No clear (trending data already saved)
+      1. Reset is_all_time_favourite=False for all rows
       2. AI call on ALL items with quality prompt (evergreen/educational)
       3. Upsert keepers with is_all_time_favourite=True
+      4. Delete unflagged rows (cleanup)
     """
     settings = get_settings()
     top_n = settings.TOP_N_RESULTS
@@ -86,7 +89,7 @@ async def classify_collected_data(input: ClassificationInput) -> ClassificationR
     )
 
     try:
-        from app.services.data_store import upsert_collected_data, clear_collected_data
+        from app.services.data_store import upsert_collected_data, reset_flags, delete_unflagged, delete_except_source_ids
         from app.services.ai_classifier import classify_content, compute_reach_score
 
         all_items = input.items_data
@@ -115,8 +118,6 @@ async def classify_collected_data(input: ClassificationInput) -> ClassificationR
 
         # --- google_news: single relevance call (no trending/all-time split) ---
         if input.source == "google_news":
-            await clear_collected_data(input.vertical_id, input.source)
-
             dtos, idx_to_sid = _build_dtos_with_short_ids(all_items, reach_map)
             ranked_idxs = await asyncio.to_thread(
                 classify_content, dtos, input.vertical_name, top_n,
@@ -132,6 +133,9 @@ async def classify_collected_data(input: ClassificationInput) -> ClassificationR
                     keeper_items.append(item)
 
             count = await upsert_collected_data(keeper_items)
+            # Delete non-keeper rows (preserves raw_data on keepers)
+            deleted = await delete_except_source_ids(input.vertical_id, input.source, sids)
+            logger.info(f"AI Classification [google_news]: cleaned up {deleted} non-relevant rows")
 
             logger.info(
                 f"AI Classification [google_news]: saved {count} relevant items "
@@ -154,53 +158,9 @@ async def classify_collected_data(input: ClassificationInput) -> ClassificationR
                 items=kept_result,
             )
 
-        # --- meta_ads: AI relevance filter → sort by impressions (reach_score) ---
-        if input.source == "meta_ads":
-            await clear_collected_data(input.vertical_id, input.source)
-
-            dtos, idx_to_sid = _build_dtos_with_short_ids(all_items, reach_map)
-            ranked_idxs = await asyncio.to_thread(
-                classify_content, dtos, input.vertical_name, len(all_items),
-                mode="relevance",
-            )
-            # From AI-relevant ads, sort by impressions (reach_score) descending, take top N
-            relevant_sids = _map_back(ranked_idxs, idx_to_sid) if ranked_idxs else []
-            relevant_sids.sort(key=lambda sid: reach_map.get(sid, 0), reverse=True)
-            sids = relevant_sids[:top_n]
-
-            keeper_items = []
-            for sid in sids:
-                if sid in sid_to_item:
-                    item = dict(sid_to_item[sid])
-                    item["reach_score"] = reach_map.get(sid, 0.0)
-                    keeper_items.append(item)
-
-            count = await upsert_collected_data(keeper_items)
-
-            logger.info(
-                f"AI Classification [meta_ads]: saved {count} top ads by impressions "
-                f"from {len(all_items)} total for vertical_id={input.vertical_id}"
-            )
-            kept_result = [
-                ClassificationItem(
-                    source_id=sid,
-                    title=sid_to_item[sid].get("title", "")[:200],
-                    reach_score=reach_map.get(sid, 0.0),
-                )
-                for sid in sids if sid in sid_to_item
-            ]
-            return ClassificationResult(
-                vertical_id=input.vertical_id,
-                source=input.source,
-                trending_count=0,
-                all_time_favourite_count=0,
-                status="success",
-                items=kept_result,
-            )
-
         if mode == "trending":
-            # Clear old data for this vertical + source
-            await clear_collected_data(input.vertical_id, input.source)
+            # Reset trending flags (preserves rows + raw_data)
+            await reset_flags(input.vertical_id, input.source, "is_trending")
 
             # Filter to recent items only
             cutoff = datetime.now(timezone.utc) - timedelta(days=trending_days)
@@ -263,7 +223,8 @@ async def classify_collected_data(input: ClassificationInput) -> ClassificationR
             )
 
         else:  # mode == "all_time"
-            # No clear — trending data already saved
+            # Reset all_time flags (preserves rows + raw_data)
+            await reset_flags(input.vertical_id, input.source, "is_all_time_favourite")
 
             dtos, idx_to_sid = _build_dtos_with_short_ids(all_items, reach_map)
             ranked_idxs = await asyncio.to_thread(
@@ -283,10 +244,13 @@ async def classify_collected_data(input: ClassificationInput) -> ClassificationR
 
             count = await upsert_collected_data(keeper_items)
 
+            # Cleanup: delete rows that have neither trending nor all_time flag
+            deleted = await delete_unflagged(input.vertical_id, input.source)
+
             logger.info(
                 f"AI Classification [all_time]: saved {count} all-time items "
                 f"from {len(all_items)} total for vertical_id={input.vertical_id}, "
-                f"source={input.source}"
+                f"source={input.source}, cleaned up {deleted} unflagged rows"
             )
 
             kept_result = [

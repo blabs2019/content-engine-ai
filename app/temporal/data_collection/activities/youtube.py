@@ -5,6 +5,7 @@ from loguru import logger
 
 from app.temporal.data_collection.shared import CollectionInput, CollectionResult, safe_published_at
 from app.services.apify_client import run_actor_sync
+from app.services.data_store import upsert_collected_data
 
 ACTOR_ID = "h7sDV53CddomktSi5"
 
@@ -26,12 +27,12 @@ def _normalize(raw: dict, input: CollectionInput) -> dict:
         "region": "US",
         "platform_metadata": {
             "views": raw.get("viewCount", 0),
-            "likes": raw.get("likeCount", 0),
-            "comments": raw.get("commentCount", 0),
+            "likes": raw.get("likes", 0) or raw.get("likeCount", 0),
+            "comments": raw.get("commentsCount", 0) or raw.get("commentCount", 0),
             "duration": raw.get("duration"),
             "channel_name": raw.get("channelName"),
             "channel_url": raw.get("channelUrl"),
-            "subscribers": raw.get("subscribers", 0),
+            "subscribers": raw.get("numberOfSubscribers", 0) or raw.get("subscribers", 0),
             "published_at": raw.get("publishedAt") or raw.get("date"),
         },
         "published_at": safe_published_at(raw.get("publishedAt") or raw.get("date")),
@@ -56,6 +57,7 @@ async def collect_youtube(input: CollectionInput) -> CollectionResult:
         })
 
         normalized = [_normalize(raw, input) for raw in items]
+        await upsert_collected_data(normalized)
         for item in normalized:
             item.pop("raw_data", None)
 

@@ -5,6 +5,7 @@ from loguru import logger
 
 from app.temporal.data_collection.shared import CollectionInput, CollectionResult, safe_published_at
 from app.services.apify_client import run_actor_sync
+from app.services.data_store import upsert_collected_data, delete_except_source_ids
 
 ACTOR_ID = "bo5X18oGenWEV9vVo"
 
@@ -58,6 +59,7 @@ def _normalize(raw: dict, input: CollectionInput) -> dict:
 
 @activity.defn
 async def collect_meta_ads(input: CollectionInput) -> CollectionResult:
+    """Scrape meta ads, AI-filter for relevance, save only top N."""
     logger.info(f"Collecting Meta Ads data for vertical_id={input.vertical_id}")
 
     try:
@@ -75,16 +77,64 @@ async def collect_meta_ads(input: CollectionInput) -> CollectionResult:
         })
 
         normalized = [_normalize(raw, input) for raw in items]
-        for item in normalized:
+        logger.info(f"Meta Ads: scraped {len(normalized)} items, running AI relevance filter")
+
+        # AI relevance filter: pass title + source_id to rank by vertical relevance
+        from app.config import get_settings
+        from app.services.ai_classifier import classify_content, ContentItemDTO, compute_reach_score
+
+        top_n = get_settings().TOP_N_RESULTS
+        vertical_name = input.vertical_name or keyword
+
+        # Build DTOs with short index IDs for reliable AI processing
+        dtos = []
+        idx_to_item = {}
+        for i, item in enumerate(normalized, start=1):
+            idx = str(i)
+            idx_to_item[idx] = item
+            dtos.append(ContentItemDTO(
+                id=idx,
+                title=item.get("title", ""),
+                reach_score=compute_reach_score("meta_ads", item.get("platform_metadata")),
+            ))
+
+        ranked_idxs = await asyncio.to_thread(
+            classify_content, dtos, vertical_name, len(normalized),
+            mode="relevance",
+        )
+
+        # From AI-relevant ads, sort by impressions (collation_count) desc, take top N
+        relevant_items = [idx_to_item[idx] for idx in ranked_idxs if idx in idx_to_item]
+        relevant_items.sort(
+            key=lambda x: float((x.get("platform_metadata") or {}).get("collation_count", 0)),
+            reverse=True,
+        )
+        keepers = relevant_items[:top_n]
+
+        # Set reach_score on keepers
+        for item in keepers:
+            item["reach_score"] = compute_reach_score("meta_ads", item.get("platform_metadata"))
+
+        # Save only top N to DB (with raw_data)
+        await upsert_collected_data(keepers)
+        keep_sids = [item["source_id"] for item in keepers]
+        deleted = await delete_except_source_ids(input.vertical_id, "meta_ads", keep_sids)
+
+        logger.info(
+            f"Meta Ads: AI kept {len(keepers)} relevant from {len(normalized)} total, "
+            f"cleaned up {deleted} old rows for vertical_id={input.vertical_id}"
+        )
+
+        # Strip raw_data for gRPC return
+        for item in keepers:
             item.pop("raw_data", None)
 
-        logger.info(f"Meta Ads: scraped {len(normalized)} items for vertical_id={input.vertical_id}")
         return CollectionResult(
             platform="meta_ads",
             vertical_id=input.vertical_id,
-            items_collected=len(normalized),
+            items_collected=len(keepers),
             status="success",
-            data=normalized,
+            data=keepers,
         )
     except Exception as e:
         logger.error(f"Meta Ads collection failed: {e}")

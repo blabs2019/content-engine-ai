@@ -47,10 +47,11 @@ async def _run_classification(input: CollectionInput, source: str, data: list[di
     if not input.vertical_name or not data:
         return
 
-    if source in ("google_news", "meta_ads"):
-        # Single call — no trending/all-time split
-        # google_news: relevance ranking (no engagement data)
-        # meta_ads: relevance filter → sort by impressions
+    if source == "meta_ads":
+        return  # meta_ads does AI filtering inside its own scraper activity
+
+    if source == "google_news":
+        # Single call — relevance ranking (no engagement data)
         await workflow.execute_activity(
             classify_collected_data,
             ClassificationInput(

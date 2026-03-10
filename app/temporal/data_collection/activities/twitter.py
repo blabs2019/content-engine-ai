@@ -5,6 +5,7 @@ from loguru import logger
 
 from app.temporal.data_collection.shared import CollectionInput, CollectionResult, safe_published_at
 from app.services.apify_client import run_actor_sync
+from app.services.data_store import upsert_collected_data
 
 ACTOR_ID = "nfp1fpt5gUlBwPcor"
 
@@ -63,6 +64,7 @@ async def collect_twitter(input: CollectionInput) -> CollectionResult:
         })
 
         normalized = [_normalize(raw, input) for raw in items if raw.get("type") == "tweet"]
+        await upsert_collected_data(normalized)
         for item in normalized:
             item.pop("raw_data", None)
 

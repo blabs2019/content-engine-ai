@@ -5,6 +5,7 @@ from loguru import logger
 
 from app.temporal.data_collection.shared import CollectionInput, CollectionResult, safe_published_at
 from app.services.apify_client import run_actor_sync
+from app.services.data_store import upsert_collected_data
 
 ACTOR_ID = "TMBawM4LZpKN15DZX"
 
@@ -55,7 +56,7 @@ async def collect_facebook(input: CollectionInput) -> CollectionResult:
         })
 
         normalized = [_normalize(raw, input) for raw in items]
-        # Strip raw_data to keep payload under Temporal's 4MB gRPC limit
+        await upsert_collected_data(normalized)
         for item in normalized:
             item.pop("raw_data", None)
 

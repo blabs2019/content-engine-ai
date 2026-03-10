@@ -5,6 +5,7 @@ from loguru import logger
 
 from app.temporal.data_collection.shared import CollectionInput, CollectionResult, safe_published_at
 from app.services.apify_client import run_actor_sync
+from app.services.data_store import upsert_collected_data
 
 ACTOR_ID = "buIWk2uOUzTmcLsuB"
 
@@ -81,6 +82,7 @@ async def collect_linkedin(input: CollectionInput) -> CollectionResult:
         logger.info(f"LinkedIn: {len(items)} raw items, {len(valid_items)} valid posts after filtering")
 
         normalized = [_normalize(raw, input) for raw in valid_items]
+        await upsert_collected_data(normalized)
         for item in normalized:
             item.pop("raw_data", None)
 

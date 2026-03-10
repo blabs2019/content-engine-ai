@@ -6,6 +6,7 @@ from loguru import logger
 
 from app.temporal.data_collection.shared import CollectionInput, CollectionResult, safe_published_at
 from app.services.apify_client import run_actor_sync
+from app.services.data_store import upsert_collected_data
 
 HASHTAG_SEARCH_ACTOR = "apify/instagram-scraper"
 HASHTAG_POSTS_ACTOR = "reGe1ST3OBgYZSsZJ"
@@ -147,7 +148,6 @@ async def collect_instagram_hashtags(input: CollectionInput) -> list[str]:
     top_hashtag_data = [name_to_raw[n] for n in top_names if n in name_to_raw]
 
     # Store top hashtags as a collected_data row
-    from app.services.data_store import upsert_collected_data
 
     hashtag_row = {
         "source": "instagram",
@@ -190,6 +190,7 @@ async def collect_instagram_posts(input: CollectionInput) -> CollectionResult:
         logger.info(f"Instagram: {len(items)} raw items, {len(valid_items)} valid after filtering")
 
         normalized = [_normalize(raw, input) for raw in valid_items]
+        await upsert_collected_data(normalized)
         for item in normalized:
             item.pop("raw_data", None)
 

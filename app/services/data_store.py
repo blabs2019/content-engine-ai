@@ -1,4 +1,4 @@
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, update
 
 from app.database import AsyncSessionLocal
 from app.models.collected_data import CollectedData
@@ -16,6 +16,64 @@ async def clear_collected_data(vertical_id: int, source: str) -> int:
             CollectedData.source == source,
             CollectedData.content_type != "tags",
         )
+        result = await session.execute(stmt)
+        await session.commit()
+        return result.rowcount
+
+
+async def reset_flags(vertical_id: int, source: str, flag_name: str) -> int:
+    """Reset a boolean flag to False for all rows of a vertical+source.
+
+    Preserves tags rows (e.g. Instagram hashtags).
+    """
+    async with AsyncSessionLocal() as session:
+        stmt = (
+            update(CollectedData)
+            .where(
+                CollectedData.vertical_id == vertical_id,
+                CollectedData.source == source,
+                CollectedData.content_type != "tags",
+            )
+            .values(**{flag_name: False})
+        )
+        result = await session.execute(stmt)
+        await session.commit()
+        return result.rowcount
+
+
+async def delete_unflagged(vertical_id: int, source: str) -> int:
+    """Delete rows that have neither is_trending nor is_all_time_favourite.
+
+    Used after both trending + all_time classifications complete to clean up
+    non-keeper rows while preserving raw_data on keepers.
+    """
+    async with AsyncSessionLocal() as session:
+        stmt = delete(CollectedData).where(
+            CollectedData.vertical_id == vertical_id,
+            CollectedData.source == source,
+            CollectedData.content_type != "tags",
+            CollectedData.is_trending == False,
+            CollectedData.is_all_time_favourite == False,
+        )
+        result = await session.execute(stmt)
+        await session.commit()
+        return result.rowcount
+
+
+async def delete_except_source_ids(vertical_id: int, source: str, keep_ids: list[str]) -> int:
+    """Delete all rows for vertical+source EXCEPT those with source_id in keep_ids.
+
+    Used for google_news/meta_ads single-pass classification cleanup.
+    """
+    async with AsyncSessionLocal() as session:
+        conditions = [
+            CollectedData.vertical_id == vertical_id,
+            CollectedData.source == source,
+            CollectedData.content_type != "tags",
+        ]
+        if keep_ids:
+            conditions.append(CollectedData.source_id.notin_(keep_ids))
+        stmt = delete(CollectedData).where(*conditions)
         result = await session.execute(stmt)
         await session.commit()
         return result.rowcount
