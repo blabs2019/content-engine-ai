@@ -1,0 +1,31 @@
+# FastAPI
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+python-multipart==0.0.20
+
+# MySQL
+sqlalchemy==2.0.36
+greenlet==3.3.2
+mysql-connector-python==9.1.0
+aiomysql==0.2.0
+pymysql==1.1.1
+
+# Migrations
+alembic==1.14.1
+
+# Temporal
+temporalio==1.9.0
+
+# Apify
+apify-client==2.5.0
+
+# AI / LLM
+openai>=1.12.0
+anthropic>=0.40.0
+google-generativeai>=0.8.0
+
+# Utilities
+loguru==0.7.3
