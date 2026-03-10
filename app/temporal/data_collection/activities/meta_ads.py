@@ -106,7 +106,7 @@ async def collect_meta_ads(input: CollectionInput) -> CollectionResult:
         # From AI-relevant ads, sort by impressions (collation_count) desc, take top N
         relevant_items = [idx_to_item[idx] for idx in ranked_idxs if idx in idx_to_item]
         relevant_items.sort(
-            key=lambda x: float((x.get("platform_metadata") or {}).get("collation_count", 0)),
+            key=lambda x: float((x.get("platform_metadata") or {}).get("collation_count") or 0),
             reverse=True,
         )
         keepers = relevant_items[:top_n]

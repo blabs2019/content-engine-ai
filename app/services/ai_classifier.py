@@ -44,7 +44,7 @@ def compute_reach_score(source: str, platform_metadata: dict | None) -> float:
     elif source == "facebook":
         return meta.get("reactions", 0) + meta.get("comments", 0) * 2
     elif source == "meta_ads":
-        return float(meta.get("collation_count", 0))
+        return float(meta.get("collation_count") or 0)
     else:
         # google_news and unknown sources
         return 0.0

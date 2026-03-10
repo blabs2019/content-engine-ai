@@ -42,7 +42,8 @@
       "Bash(curl -s -I -X OPTIONS http://localhost:8000/api/v1/verticals -H \"Origin: http://localhost:5173\" -H \"Access-Control-Request-Method: GET\")",
       "Bash(curl -s -I -X OPTIONS \"http://localhost:8000/api/v1/verticals/\" -H \"Origin: http://localhost:5173\" -H \"Access-Control-Request-Method: GET\")",
       "Bash(curl -s \"http://localhost:8000/api/v1/verticals/\")",
-      "Bash(python -m json.tool)"
+      "Bash(python -m json.tool)",
+      "Bash(source .venv/Scripts/activate)"
     ]
   }
 }
