@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routers import content, vertical, collect
+from app.routers import content, vertical, collect, proxy
 
 settings = get_settings()
 
@@ -33,6 +33,7 @@ app.add_middleware(
 app.include_router(content.router, prefix="/api/v1")
 app.include_router(vertical.router, prefix="/api/v1")
 app.include_router(collect.router, prefix="/api/v1")
+app.include_router(proxy.router, prefix="/api/v1")
 
 
 @app.get("/health")

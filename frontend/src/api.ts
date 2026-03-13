@@ -5,7 +5,7 @@ import type {
   VerticalCollectedData,
 } from "./types";
 
-const BASE = "http://localhost:8000/api/v1";
+const BASE = "http://52.2.208.105:8000/api/v1";
 
 async function request<T>(url: string, opts?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${url}`, {
