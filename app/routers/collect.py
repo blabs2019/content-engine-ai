@@ -206,7 +206,7 @@ async def get_vertical_collected_data(
                 names = json.loads(row.body) if row.body else []
                 raw_hashtags = (row.raw_data or {}).get("hashtags", [])
                 name_to_count = {
-                    h.get("name", ""): h.get("postsCount", 0) for h in raw_hashtags
+                    h.get("name", ""): h.get("media_count", 0) for h in raw_hashtags
                 }
                 for name in names:
                     hashtags.append(HashtagItem(

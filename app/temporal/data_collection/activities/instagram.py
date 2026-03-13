@@ -8,7 +8,7 @@ from app.temporal.data_collection.shared import CollectionInput, CollectionResul
 from app.services.apify_client import run_actor_sync
 from app.services.data_store import upsert_collected_data
 
-HASHTAG_SEARCH_ACTOR = "apify/instagram-scraper"
+HASHTAG_SEARCH_ACTOR = "JTn9i2j0qJPdeKNWS"
 HASHTAG_POSTS_ACTOR = "reGe1ST3OBgYZSsZJ"
 
 
@@ -59,11 +59,7 @@ async def collect_instagram_hashtags(input: CollectionInput) -> list[str]:
     keyword = " ".join(input.keywords) if input.keywords else "trending"
 
     items = await asyncio.to_thread(run_actor_sync, HASHTAG_SEARCH_ACTOR, {
-        "search": keyword,
-        "searchLimit": 10,
-        "searchType": "hashtag",
-        "resultsLimit": 50,
-        "addParentData": False,
+        "query": keyword,
     })
 
     # Filter out error/empty items
@@ -85,7 +81,7 @@ async def collect_instagram_hashtags(input: CollectionInput) -> list[str]:
 
     vertical_name = input.vertical_name or keyword
     # Include postsCount so LLM can factor in popularity
-    name_to_count = {h["name"]: h.get("postsCount", 0) for h in valid_items if h.get("name")}
+    name_to_count = {h["name"]: h.get("media_count", 0) for h in valid_items if h.get("name")}
     hashtags_text = "\n".join(
         f"- {name} (posts: {name_to_count.get(name, 0):,})" for name in all_names
     )
@@ -132,13 +128,13 @@ async def collect_instagram_hashtags(input: CollectionInput) -> list[str]:
 
         if not top_names:
             # Fallback: sort by postsCount
-            sorted_tags = sorted(valid_items, key=lambda x: x.get("postsCount", 0), reverse=True)
+            sorted_tags = sorted(valid_items, key=lambda x: x.get("media_count", 0), reverse=True)
             top_names = [h["name"] for h in sorted_tags[:top_n_hashtags] if h.get("name")]
 
         logger.info(f"Instagram Step 1: AI picked top 10 hashtags: {top_names}")
     except Exception as e:
         logger.warning(f"Instagram: AI hashtag selection failed ({e}), falling back to postsCount")
-        sorted_tags = sorted(valid_items, key=lambda x: x.get("postsCount", 0), reverse=True)
+        sorted_tags = sorted(valid_items, key=lambda x: x.get("media_count", 0), reverse=True)
         top_names = [h["name"] for h in sorted_tags[:top_n_hashtags] if h.get("name")]
 
     logger.info(f"Instagram Step 1: top {top_n_hashtags} hashtags: {top_names}")
