@@ -72,6 +72,8 @@ class VerticalCollectedDataResponse(BaseModel):
     news: list[CollectedDataItem] = []
     meta_ads: list[CollectedDataItem] = []
     hashtags: list[HashtagItem] = []
+    news_keywords: list[str] = []
+    news_titles: list[str] = []
 
 
 class CollectionTriggerResponse(BaseModel):

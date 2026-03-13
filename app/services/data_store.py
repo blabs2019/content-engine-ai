@@ -14,7 +14,7 @@ async def clear_collected_data(vertical_id: int, source: str) -> int:
         stmt = delete(CollectedData).where(
             CollectedData.vertical_id == vertical_id,
             CollectedData.source == source,
-            CollectedData.content_type != "tags",
+            CollectedData.content_type.notin_(["tags", "keyword", "title"]),
         )
         result = await session.execute(stmt)
         await session.commit()
@@ -32,7 +32,7 @@ async def reset_flags(vertical_id: int, source: str, flag_name: str) -> int:
             .where(
                 CollectedData.vertical_id == vertical_id,
                 CollectedData.source == source,
-                CollectedData.content_type != "tags",
+                CollectedData.content_type.notin_(["tags", "keyword", "title"]),
             )
             .values(**{flag_name: False})
         )
@@ -51,7 +51,7 @@ async def delete_unflagged(vertical_id: int, source: str) -> int:
         stmt = delete(CollectedData).where(
             CollectedData.vertical_id == vertical_id,
             CollectedData.source == source,
-            CollectedData.content_type != "tags",
+            CollectedData.content_type.notin_(["tags", "keyword", "title"]),
             CollectedData.is_trending == False,
             CollectedData.is_all_time_favourite == False,
         )
@@ -69,7 +69,7 @@ async def delete_except_source_ids(vertical_id: int, source: str, keep_ids: list
         conditions = [
             CollectedData.vertical_id == vertical_id,
             CollectedData.source == source,
-            CollectedData.content_type != "tags",
+            CollectedData.content_type.notin_(["tags", "keyword", "title"]),
         ]
         if keep_ids:
             conditions.append(CollectedData.source_id.notin_(keep_ids))

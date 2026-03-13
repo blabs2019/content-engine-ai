@@ -7,17 +7,29 @@ from app.temporal.data_collection.shared import CollectionInput, CollectionResul
 from app.services.apify_client import run_actor_sync
 from app.services.data_store import upsert_collected_data
 
-ACTOR_ID = "TMBawM4LZpKN15DZX"
+ACTOR_ID = "Ew2lyICEnHMcqRo6T"
 
 
 def _normalize(raw: dict, input: CollectionInput) -> dict:
-    text = raw.get("postText") or ""
+    text = raw.get("message") or ""
     author = raw.get("author") or {}
-    attachments = raw.get("attachments") or []
-    file_urls = [a["url"] for a in attachments if a.get("url")]
+
+    # Extract direct media links
+    file_urls = []
+    image = raw.get("image")
+    if isinstance(image, dict) and image.get("uri"):
+        file_urls.append(image["uri"])
+    if raw.get("video"):
+        file_urls.append(raw["video"])
+    if raw.get("video_thumbnail"):
+        file_urls.append(raw["video_thumbnail"])
+    for album_img in (raw.get("album_preview") or []):
+        if isinstance(album_img, dict) and album_img.get("uri"):
+            file_urls.append(album_img["uri"])
+
     return {
         "source": "facebook",
-        "source_id": str(raw.get("postId", "")),
+        "source_id": str(raw.get("post_id", "")),
         "vertical_id": input.vertical_id,
         "content_type": "post",
         "title": text[:500] if text else "Untitled",
@@ -28,12 +40,13 @@ def _normalize(raw: dict, input: CollectionInput) -> dict:
         "tags": input.keywords or [],
         "region": "US",
         "platform_metadata": {
-            "reactions": raw.get("reactionsCount", 0),
+            "reactions": raw.get("reactions_count", 0),
             "reactions_breakdown": raw.get("reactions", {}),
-            "comments": raw.get("commentsCount", 0),
-            "post_id": raw.get("postId"),
+            "comments": raw.get("comments_count", 0),
+            "shares": raw.get("reshare_count", 0),
+            "post_id": raw.get("post_id"),
             "author_name": author.get("name") if isinstance(author, dict) else author,
-            "author_url": author.get("profileUrl") if isinstance(author, dict) else None,
+            "author_url": author.get("url") if isinstance(author, dict) else None,
             "timestamp": raw.get("timestamp"),
         },
         "published_at": safe_published_at(raw.get("timestamp")),
@@ -49,10 +62,9 @@ async def collect_facebook(input: CollectionInput) -> CollectionResult:
         keyword = " ".join(input.keywords) if input.keywords else "trending"
 
         items = await asyncio.to_thread(run_actor_sync, ACTOR_ID, {
+            "location_uid": "United States",
             "query": keyword,
-            "resultsCount": 50,
-            "searchType": "top",
-            "location": "United States",
+            "maxResults": 50
         })
 
         normalized = [_normalize(raw, input) for raw in items]

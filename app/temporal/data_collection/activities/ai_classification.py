@@ -46,10 +46,17 @@ def _build_dtos_with_short_ids(items: list[dict], reach_map: dict):
         sid = item.get("source_id", "")
         idx = str(i)
         idx_to_sid[idx] = sid
+
+        body = item.get("body") or ""
+        body_snippet = body[:200].strip()
+        if len(body) > 200:
+            body_snippet += "..."
+
         dtos.append(ContentItemDTO(
             id=idx,
             title=item.get("title", ""),
             reach_score=reach_map.get(sid, 0.0),
+            body_snippet=body_snippet,
         ))
     return dtos, idx_to_sid
 

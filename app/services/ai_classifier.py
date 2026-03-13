@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 from loguru import logger
 
+from app.prompts import load_prompt
 from app.services.llm_provider import get_llm_provider, ChatMessage
 
 
@@ -13,6 +14,7 @@ class ContentItemDTO:
     id: str  # source_id from the platform
     title: str
     reach_score: float = 0.0
+    body_snippet: str = ""
 
 
 def compute_reach_score(source: str, platform_metadata: dict | None) -> float:
@@ -42,7 +44,7 @@ def compute_reach_score(source: str, platform_metadata: dict | None) -> float:
             + meta.get("comments", 0)
         )
     elif source == "facebook":
-        return meta.get("reactions", 0) + meta.get("comments", 0) * 2
+        return meta.get("reactions", 0) + meta.get("comments", 0) * 2 + meta.get("shares", 0) * 2
     elif source == "meta_ads":
         return float(meta.get("collation_count") or 0)
     else:
@@ -73,71 +75,41 @@ def classify_content(
 
     llm = get_llm_provider(provider_name)
 
-    # Build the item list for the prompt (include reach_score so AI factors in popularity)
-    items_text = "\n".join(
-        f"- ID:{item.id} | Reach:{item.reach_score:,.0f} | {item.title}"
-        for item in items
-    )
+    # Build item lines — include body_snippet when available and different from title
+    lines = []
+    for item in items:
+        line = f"- ID:{item.id} | Reach:{item.reach_score:,.0f} | {item.title}"
+        if item.body_snippet and item.body_snippet[:100] != item.title[:100]:
+            line += f" | Snippet: {item.body_snippet}"
+        lines.append(line)
+    items_text = "\n".join(lines)
 
-    if mode == "trending":
-        system_content = (
-            "You are a social media trend analyst. You will be given a list of RECENT content items "
-            "(each with an ID, reach score, and title) and a vertical/niche name. Your job is to "
-            "identify the most TRENDING and VIRAL items — content that is generating buzz right now.\n\n"
-            "Prioritise: viral potential, high engagement velocity (high reach relative to recency), "
-            "controversial or conversation-starting topics, breaking news, and timely content.\n\n"
-            "Deprioritise: evergreen/educational content, generic advice, and low-engagement posts.\n\n"
-            "Return ONLY a JSON object with a single key 'ranked_ids' containing an array of "
-            "item IDs (as strings) ordered by trending/viral score (most viral first). Include only "
-            "items genuinely relevant to the vertical.\n\n"
-            "Example response:\n"
-            '{"ranked_ids": ["abc123", "def456", "ghi789"]}'
-        )
-        user_suffix = "ranked by trending/viral potential (most buzzy first)"
-    elif mode == "relevance":
-        system_content = (
-            "You are a content relevance analyst. You will be given a list of content items "
-            "(each with an ID and title) and a vertical/niche name. Your job is to "
-            "rank ALL items by how relevant they are to the given vertical.\n\n"
-            "Prioritise: directly related to the vertical, informative, newsworthy, "
-            "practical, or educational for people in this niche.\n\n"
-            "IMPORTANT: You MUST return ALL item IDs, ranked from most relevant to least relevant. "
-            "Do NOT filter out items — include every single item in your ranking. "
-            "The caller will decide how many to keep.\n\n"
-            "Return ONLY a JSON object with a single key 'ranked_ids' containing an array of "
-            "ALL item IDs (as strings) ordered by relevance (most relevant first).\n\n"
-            "Example response:\n"
-            '{"ranked_ids": ["abc123", "def456", "ghi789"]}'
-        )
-        user_suffix = "ranked by relevance (most relevant first). Return ALL item IDs, ranked"
-    else:
-        system_content = (
-            "You are a content quality analyst. You will be given a list of content items "
-            "(each with an ID, reach score, and title) and a vertical/niche name. Your job is to "
-            "identify the highest-quality, most VALUABLE items — content that is evergreen and worth saving.\n\n"
-            "Prioritise: educational depth, practical how-to guides, industry insights, expert knowledge, "
-            "inspirational stories, and genuinely useful information for the vertical.\n\n"
-            "Deprioritise: viral fluff, memes, low-effort humour, rage-bait, and engagement farming.\n\n"
-            "Return ONLY a JSON object with a single key 'ranked_ids' containing an array of "
-            "item IDs (as strings) ordered by quality + value (best first). Include only "
-            "items genuinely relevant to the vertical.\n\n"
-            "Example response:\n"
-            '{"ranked_ids": ["abc123", "def456", "ghi789"]}'
-        )
-        user_suffix = "ranked by quality + evergreen value (best first)"
+    # Load system prompt from template file
+    template_map = {
+        "trending": "trending_system.txt",
+        "relevance": "relevance_system.txt",
+        "all_time": "all_time_system.txt",
+    }
+    template_file = template_map.get(mode, "all_time_system.txt")
+    system_content = load_prompt(template_file).format(vertical_name=vertical_name)
+
+    suffix_map = {
+        "trending": "ranked by trending/viral potential (most buzzy first)",
+        "relevance": "ranked by relevance (most relevant first). Return ALL item IDs, ranked",
+        "all_time": "ranked by quality + evergreen value (best first)",
+    }
+    user_suffix = suffix_map.get(mode, suffix_map["all_time"])
+
+    user_content = load_prompt("user_prompt.txt").format(
+        vertical_name=vertical_name,
+        items_text=items_text,
+        top_n=top_n,
+        user_suffix=user_suffix,
+    )
 
     messages = [
         ChatMessage(role="system", content=system_content),
-        ChatMessage(
-            role="user",
-            content=(
-                f"Vertical/Niche: {vertical_name}\n\n"
-                f"Content items:\n{items_text}\n\n"
-                f"Return the top {top_n} most relevant items for the "
-                f'"{vertical_name}" vertical, {user_suffix}. Return as JSON: '
-                f'{{"ranked_ids": [...]}}'
-            ),
-        ),
+        ChatMessage(role="user", content=user_content),
     ]
 
     raw_text = ""

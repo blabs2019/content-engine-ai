@@ -194,6 +194,8 @@ async def get_vertical_collected_data(
     news: list[CollectedDataItem] = []
     meta_ads: list[CollectedDataItem] = []
     hashtags: list[HashtagItem] = []
+    news_keywords: list[str] = []
+    news_titles: list[str] = []
 
     for row in rows:
         source = row.source
@@ -211,6 +213,18 @@ async def get_vertical_collected_data(
                         name=name,
                         posts_count=int(name_to_count.get(name, 0)),
                     ))
+            except Exception:
+                pass
+            continue
+
+        # News insights rows (keyword/title) → extract string arrays
+        if row.content_type in ("keyword", "title"):
+            try:
+                names = json.loads(row.body) if row.body else []
+                if row.content_type == "keyword":
+                    news_keywords = names
+                else:
+                    news_titles = names
             except Exception:
                 pass
             continue
@@ -235,6 +249,8 @@ async def get_vertical_collected_data(
         news=news,
         meta_ads=meta_ads,
         hashtags=hashtags,
+        news_keywords=news_keywords,
+        news_titles=news_titles,
     )
 
 

@@ -22,6 +22,7 @@ with workflow.unsafe.imports_passed_through():
         collect_linkedin,
         collect_meta_ads,
         classify_collected_data,
+        extract_news_insights,
     )
 
 NO_RETRY = RetryPolicy(maximum_attempts=1)
@@ -181,6 +182,11 @@ class GoogleNewsCollectionWorkflow:
         )
         if result.status == "success" and result.items_collected > 0:
             await _run_classification(input, "google_news", result.data)
+            await workflow.execute_activity(
+                extract_news_insights, input,
+                start_to_close_timeout=timedelta(minutes=10),
+                retry_policy=NO_RETRY,
+            )
         return result
 
 

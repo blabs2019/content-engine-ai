@@ -1,0 +1,6 @@
+Vertical/Niche: {vertical_name}
+
+Content items:
+{items_text}
+
+Return the top {top_n} most relevant items for the "{vertical_name}" vertical, {user_suffix}. Return as JSON: {{"ranked_ids": [...]}}

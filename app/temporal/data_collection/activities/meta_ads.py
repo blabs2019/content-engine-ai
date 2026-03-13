@@ -96,6 +96,7 @@ async def collect_meta_ads(input: CollectionInput) -> CollectionResult:
                 id=idx,
                 title=item.get("title", ""),
                 reach_score=compute_reach_score("meta_ads", item.get("platform_metadata")),
+                body_snippet=(item.get("body") or "")[:200],
             ))
 
         ranked_idxs = await asyncio.to_thread(
