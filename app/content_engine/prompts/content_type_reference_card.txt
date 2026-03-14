@@ -1,0 +1,111 @@
+CONTENT TYPE REFERENCE — FOR TOPIC ASSIGNMENT
+================================================================
+
+Every post must be assigned exactly ONE content type.
+Use this reference to decide which type fits each topic.
+
+The two things that determine the right type:
+1. WHAT EMOTION should the reader feel?
+2. WHAT HOOK STRATEGY achieves that emotion?
+
+================================================================
+THE 11 CONTENT TYPES
+================================================================
+
+1. TRANSFORMATION
+   Emotion: Awe / Satisfaction — "wow, look at that difference"
+   Hook: Drop the reader into the PROBLEM scene. The mess is the magnet.
+   Trigger: A job with a visible before/after outcome.
+   Requires real photo: YES
+   Example hook: "This bathroom hadn't been touched in 22 years."
+
+2. EDUCATIONAL / PRACTICAL VALUE
+   Emotion: "I didn't know that" / Self-protection
+   Hook: Reveal a hidden risk, common mistake, or little-known fact.
+   Trigger: Something the audience can learn and act on TODAY.
+   Requires real photo: NO
+   Example hook: "3 signs your home's wiring needs inspection — before winter hits."
+
+3. SOCIAL PROOF / CLIENT WIN
+   Emotion: Trust / Relief — "they helped someone like me"
+   Hook: Start with the CLIENT'S crisis, not your solution.
+   Trigger: A real result, review, or testimonial worth telling as a story.
+   Requires real photo: NO
+   Example hook: "Maria called us at 8pm on a Friday. Her basement was flooded."
+
+4. COMMUNITY / LOCAL
+   Emotion: Belonging / Pride — "they're one of us"
+   Hook: Name the specific place, neighborhood, or local moment.
+   Trigger: A hyper-local connection — event, landmark, local news, neighborhood reference.
+   Requires real photo: NO
+   Example hook: "Proud to serve the Oak Park community for 8 years."
+
+5. SOFT PROMOTIONAL
+   Emotion: Curiosity / Opportunity — "that's actually useful AND there's an offer"
+   Hook: Lead with VALUE (a tip, fact, or insight). The offer comes second, always.
+   Trigger: A service or offer worth mentioning — but only through a value-first lens.
+   Requires real photo: NO
+   Example hook: "Most HVAC filters should be changed every 90 days. We're running a filter replacement special this month."
+
+6. BEHIND THE SCENES
+   Emotion: Authenticity / Connection — "these are real people doing real work"
+   Hook: Show the unglamorous, unpolished, real moment. Smartphone quality wins.
+   Trigger: A moment worth capturing — early morning prep, the team at work, the messy middle.
+   Requires real photo: YES
+   Example hook: "6am crew loading up before the day starts."
+
+7. SCENARIO / STORY
+   Emotion: "That could be me" / Anxiety → Resolution
+   Hook: Paint a vivid "what if" that the reader sees themselves in. No client names.
+   Trigger: A relatable situation that connects to an otherwise dry topic (insurance, legal).
+   Requires real photo: NO
+   Example hook: "A family of four thought they were fully covered. Then the storm hit."
+
+8. AUTHORITY / OPINION
+   Emotion: Surprise / Respect — "I never thought of it that way"
+   Hook: Take a clear, contrarian stance. Not educational — opinionated.
+   Trigger: Something in the industry worth challenging or calling out.
+   Requires real photo: NO
+   Example hook: "Every contractor who tells you a roof repair can wait till spring is wrong."
+
+9. ORIGIN NETWORK
+   Emotion: Nostalgia / Loyalty — "I've been watching them grow"
+   Hook: Name the person, the moment, the milestone. Specific stories, real names.
+   Trigger: A founding moment, first customer, key milestone, or relationship worth celebrating.
+   Requires real photo: YES
+   Example hook: "Three years ago, [Name] was our very first customer. Two guys and a van."
+
+10. SEASONAL / TIMELY
+    Emotion: Urgency / Relevance — "this applies to me RIGHT NOW"
+    Hook: Connect the calendar moment to the reader's life, not just your service.
+    Trigger: A season, holiday, or cultural moment relevant to the business's service.
+    Requires real photo: NO
+    Example hook: "Temperatures drop below 30°F this week. Here are 3 things to check tonight."
+
+11. HUMAN MOMENTS
+    Emotion: Warmth / Recognition — "I like these people"
+    Hook: Name the person or moment in the first 5 words. No buildup, no suspense.
+    Trigger: Birthday, work anniversary, new hire, team gathering, personal milestone.
+    Requires real photo: YES
+    Example hook: "Today is Marcus's 2nd anniversary with the team."
+
+================================================================
+ASSIGNMENT RULES
+================================================================
+
+DISTRIBUTION:
+- Max 20% of any calendar can be Soft Promotional
+- Origin Network: max 1-2 per month
+- No two consecutive posts of the same content type
+- Balance across types based on vertical weights
+
+PHOTO REQUIREMENTS:
+- Transformation, Behind the Scenes, Origin Network, Human Moments → MUST flag requires_real_photo: true
+- AI-generated images are NEVER acceptable for these four types
+
+SINGLE TYPE ONLY:
+- Every post belongs to exactly ONE content type — no hybrid labeling
+- If a post could be two types, choose the one matching the PRIMARY emotion you want
+
+SCENARIO/STORY and AUTHORITY:
+- Text-heavy — no link in post body, URL goes in first comment

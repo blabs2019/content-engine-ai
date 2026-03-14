@@ -89,6 +89,48 @@ class AnthropicProvider(LLMProvider):
         )
 
 
+class DeepResearchProvider(LLMProvider):
+    """OpenAI Responses API with web_search tool for deep research (o4-mini)."""
+
+    def __init__(self, api_key: str, model: str):
+        from openai import OpenAI
+
+        self.client = OpenAI(api_key=api_key)
+        self.model = model
+
+    def chat_completion(
+        self, messages: list[ChatMessage], temperature: float = 0.3
+    ) -> ChatCompletionResponse:
+        prompt = "\n\n".join(m.content for m in messages)
+
+        response = self.client.responses.create(
+            model=self.model,
+            input=prompt,
+            tools=[{"type": "web_search_preview"}],
+        )
+
+        # Extract text from response output items
+        output_text = ""
+        for item in response.output:
+            if item.type == "message":
+                for block in item.content:
+                    if hasattr(block, "text"):
+                        output_text += block.text
+
+        usage = {}
+        if hasattr(response, "usage") and response.usage:
+            usage = {
+                "input_tokens": getattr(response.usage, "input_tokens", 0),
+                "output_tokens": getattr(response.usage, "output_tokens", 0),
+            }
+
+        return ChatCompletionResponse(
+            content=output_text,
+            model=self.model,
+            usage=usage,
+        )
+
+
 class GeminiProvider(LLMProvider):
     def __init__(self, api_key: str, model: str):
         import google.generativeai as genai
@@ -126,7 +168,9 @@ def get_llm_provider(provider_name: str | None = None) -> LLMProvider:
         return OpenAIProvider(api_key=settings.OPENAI_API_KEY, model=settings.OPENAI_MODEL)
     elif name in ("anthropic", "claude"):
         return AnthropicProvider(api_key=settings.ANTHROPIC_API_KEY, model=settings.ANTHROPIC_MODEL)
+    elif name in ("deep-research", "deep_research"):
+        return DeepResearchProvider(api_key=settings.OPENAI_API_KEY, model=settings.OPENAI_DEEP_RESEARCH_MODEL)
     elif name == "gemini":
         return GeminiProvider(api_key=settings.GEMINI_API_KEY, model=settings.GEMINI_MODEL)
     else:
-        raise ValueError(f"Unsupported LLM provider: {name}. Supported: openai, anthropic, gemini")
+        raise ValueError(f"Unsupported LLM provider: {name}. Supported: openai, anthropic, gemini, deep-research")

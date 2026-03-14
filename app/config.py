@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     LLM_PROVIDER: str = "claude"
     OPENAI_API_KEY: str = ""
     OPENAI_MODEL: str = "gpt-4o-mini"
+    OPENAI_DEEP_RESEARCH_MODEL: str = "o4-mini"
     ANTHROPIC_API_KEY: str = ""
     ANTHROPIC_MODEL: str = "claude-sonnet-4-20250514"
     GEMINI_API_KEY: str = ""
@@ -36,6 +37,10 @@ class Settings(BaseSettings):
     TOP_N_RESULTS: int = 10
     TRENDING_DATE_RANGE_DAYS: int = 7
     TOP_N_HASHTAGS: int = 10
+
+    # Content Engine
+    CONTENT_FINE_TUNING_URL: str = ""
+    CONTENT_ENGINE_DEBUG: str = "off"
 
     @property
     def DATABASE_URL(self) -> str:

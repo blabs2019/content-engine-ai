@@ -1,0 +1,436 @@
+CONTENT TYPE TRAINING — FOR POST GENERATION
+================================================================
+
+This document teaches you HOW to write social media posts that make
+people stop scrolling. Every section below is training material.
+Absorb the principles and examples — then apply them to the specific
+content type assigned to this post.
+
+================================================================
+SECTION 1: UNIVERSAL PRINCIPLES
+================================================================
+These apply to EVERY content type. Never violate these.
+
+PRINCIPLE 1: THE HOOK IS EVERYTHING
+-----------------------------------
+The first line decides if anyone reads the rest. A good hook creates
+a gap the reader MUST close. It's a door left open, not a sign on
+the wall.
+
+The universal test for any hook:
+- Would someone who does NOT need this service still read the next line?
+- Does it describe a SCENE or PROBLEM? (not a service announcement)
+- Is there a specific detail — a number, a time, a place, a name?
+
+If the answer to any of these is NO, the hook fails. Rewrite it.
+
+GOOD hooks across all types:
+- "This bathroom hadn't been touched in 22 years."
+- "The pipe burst at 2am. The family had no water by morning."
+- "Maria called us at 8pm on a Friday. Her basement was flooded."
+- "A family of four thought they were fully covered. Then the storm hit."
+- "Every contractor who tells you a roof repair can wait till spring is wrong."
+- "Today is Marcus's 2nd anniversary with the team."
+
+BAD hooks — these all fail the same way:
+- "Check out this amazing transformation we did!" ← starts with the business, not the scene
+- "We recently completed a project for a client…" ← vague, no specific detail, corporate voice
+- "At [Business Name] we pride ourselves on quality work." ← nobody cares about your pride
+- "We are so grateful for the amazing people around us…" ← generic corporate warmth
+- "We are proud to share our latest success story." ← "proud to share" is the #1 scroll-past phrase
+
+THE PATTERN:
+Good hooks start with the CUSTOMER'S situation, the SCENE, or the MOMENT.
+Bad hooks start with the BUSINESS talking about itself.
+
+Name the problem, not yourself.
+Name the person, not the company.
+Name the moment, not your feelings about it.
+
+
+PRINCIPLE 2: EMOTION BEFORE INFORMATION
+----------------------------------------
+The reader should FEEL something before they THINK anything.
+
+This doesn't mean being dramatic. It means being specific and human.
+
+"The owners had been living with a leaking ceiling for two winters."
+— The reader feels the frustration before learning about the fix.
+
+"When Marcus started, he'd never touched an HVAC unit in his life."
+— The reader feels the underdog story before learning about the milestone.
+
+"A family of four thought they were fully covered."
+— The reader feels the false security before learning about the gap.
+
+Specificity creates emotion. "22 years" hits harder than "a long time."
+"2am" hits harder than "late at night." "Four feet down the pipe" hits
+harder than "deep in the plumbing."
+
+Vague = forgettable. Specific = emotional.
+
+
+PRINCIPLE 3: THE BUSINESS EARNS ATTENTION, NEVER DEMANDS IT
+------------------------------------------------------------
+The work speaks. The story carries. The value leads.
+
+Never:
+- Open with your business name
+- Use "we specialize in" or "we offer" or "we provide"
+- Say "seamless" or "professional" — show it, don't label it
+- Put a phone number or URL in the post body
+- End with "Call us now!" or "Limited spots available!!!"
+- Use "we are proud to" or "we are excited to announce"
+
+Instead:
+- Let the result speak: "Runs like it's brand new."
+- Let the client speak: "Her words: 'I forgot what this room was supposed to look like.'"
+- Let the moment speak: "Last week a customer called specifically to ask if Marcus would be the one coming out. That says everything."
+
+The CTA is always soft. One line. Feels like a natural next step:
+"Dealing with something similar? Drop a comment or send us a message."
+"Drop a heart for him in the comments."
+"Tag someone who needs to see this."
+
+Never pushy. Never salesy. Never desperate.
+
+
+PRINCIPLE 4: ONE SPECIFIC DETAIL BEATS TEN GENERIC COMPLIMENTS
+---------------------------------------------------------------
+This is the single most important writing rule.
+
+GOOD: "Three years ago [Name] showed up on her first day with a notebook full of questions. She still has that notebook."
+BAD: "[Name] is a valued member of our team who always gives 110%."
+
+GOOD: "We came in on a Thursday morning and by Friday afternoon it was sealed, repainted, and dry."
+BAD: "We completed the project quickly and efficiently."
+
+GOOD: "Turns out there was a full blockage sitting 4 feet down the pipe — built up over years."
+BAD: "We discovered and resolved the underlying plumbing issue."
+
+The specific detail is what makes it believable. Without it, every post
+sounds like every other business's post. With it, it sounds like a real
+story from a real person.
+
+
+PRINCIPLE 5: KEEP IT SHORT
+---------------------------
+Social media posts are not essays. Every sentence must earn its place.
+
+- Hook: 1 sentence
+- Body: 2-3 sentences maximum
+- Result/payoff: 1 sentence
+- CTA: 1 sentence
+
+Total: 4-6 sentences for most post types. Under 80 words for
+Human Moments. Under 100 words for most others.
+
+If you can cut a sentence without losing meaning, cut it.
+
+
+================================================================
+SECTION 2: DEEP TRAINING EXAMPLES
+================================================================
+These are fully detailed content types with complete writing rules.
+Study how the principles above are applied specifically to each type.
+For other content types, apply the same principles using the type's
+target emotion and hook strategy.
+
+
+CONTENT TYPE: TRANSFORMATION POST
+-----------------------------------
+What it is:
+A post that shows a visible change — before and after, problem and
+solution, broken and fixed. The work is the story. The result is the hook.
+
+Target emotion: Awe / Satisfaction
+The reader should feel the problem's weight, then feel the relief of the fix.
+
+When to use it:
+- After completing a job that has a visible outcome
+- When the client has a photo of the before AND after state
+- When the result is specific enough to be impressive — not vague
+
+HOOK RULES:
+The opening line must drop the reader into the problem — not the solution.
+The reader should feel the problem before they see the fix. Write it like
+you're describing a scene, not announcing a service.
+
+Good: "This bathroom hadn't been touched in 22 years."
+Good: "The pipe burst at 2am. The family had no water by morning."
+Bad: "Check out this amazing transformation we did!"
+Bad: "We recently completed a project for a client…"
+
+The rule: name the problem, not yourself.
+
+BODY RULES:
+Two to three sentences maximum. Tell what happened, what was done, and
+how long it took. Keep it human — not technical. The reader is a
+homeowner, not a contractor.
+
+Good: "The owners had been living with a leaking ceiling for two winters.
+We came in on a Thursday morning and by Friday afternoon it was sealed,
+repainted, and dry."
+
+Bad: "We applied a polyurethane membrane coating with 3-layer application
+process including primer, base coat and topcoat."
+
+Avoid jargon. Avoid listing materials or specs unless they make the
+result more impressive.
+
+RESULT LINE:
+One sentence. Make it specific. Numbers, time, or a direct quote from
+the client.
+
+Good: "Today it looks brand new — and they haven't had a single leak in 6 months."
+Good: "Her words: 'I forgot what this room was supposed to look like.'"
+Bad: "The client was very happy with the results."
+
+CTA:
+Soft. Never pushy. One line.
+
+Good: "Dealing with something similar? Drop a comment or send us a message — happy to take a look."
+Bad: "Call us now for a free quote! Limited spots available!!!"
+
+HOW IT SHOULD SOUND:
+Confident. Understated. Real. Like a craftsperson who is proud of their
+work but doesn't need to shout about it.
+
+VISUAL RULES:
+- Real photos mandatory — before AND after
+- Album format (2-5 images) — before photo first, after photo last
+- Smartphone quality is fine — authenticity beats polish
+- AI-generated images are NEVER acceptable
+- The before photo must be as ugly as possible — bigger contrast = more powerful
+
+FULL EXAMPLE (Plumber):
+"This kitchen sink had been draining at half speed for eight months.
+The homeowner had tried every drain cleaner on the shelf. Nothing worked.
+Turns out there was a full blockage sitting 4 feet down the pipe — built
+up over years.
+We cleared it in 90 minutes. Runs like it's brand new.
+If your sink, tub, or shower is draining slowly — don't wait for it to
+stop completely. Message us and we'll take a look."
+
+WHAT MAKES THIS EXAMPLE WORK:
+- Hook: "draining at half speed for eight months" — specific, relatable problem
+- Emotion: frustration (they tried everything), then satisfaction (90 minutes, brand new)
+- Specific detail: "4 feet down the pipe" — you can picture it
+- CTA: soft, helpful, not pushy
+
+
+CONTENT TYPE: HUMAN MOMENTS POST
+----------------------------------
+What it is:
+A post that shows the real people behind the business — a birthday, a work
+anniversary, a team lunch, a new hire, a celebration. No selling. No
+educating. Pure humanity.
+
+Target emotion: Warmth / Recognition
+The reader should feel like they're seeing something real and personal —
+not a corporate HR announcement.
+
+When to use it:
+- Team member birthday
+- Work anniversary (1 year, 5 years etc.)
+- New hire joining the team
+- Office or team gathering — lunch, outing, celebration
+- A personal milestone the owner wants to share
+
+HOOK RULES:
+Name the person or the moment in the first 5 words. No buildup. No
+suspense. No generic gratitude opener.
+
+Good: "Today is [Name]'s 3rd anniversary with us."
+Good: "We have a new face joining the team this week."
+Good: "Yesterday the whole team took the afternoon off. Here's what we got up to."
+Bad: "We are so grateful for the amazing people around us…"
+Bad: "At [Business Name] we believe our team is our biggest asset…"
+
+The rule: name the person or the moment first, everything else second.
+
+BODY RULES:
+One to two sentences only. Say one real, specific thing about the person.
+Not their job title. Not a generic compliment. Something that shows you
+actually know them.
+
+Good: "Three years ago [Name] showed up on her first day with a notebook
+full of questions. She still has that notebook."
+Good: "[Name] joined us as our first ever hire. Back then we worked out
+of a single room. Now look at us."
+Bad: "[Name] is a valued member of our team who always gives 110%."
+Bad: "We are lucky to have such a hardworking and dedicated professional."
+
+The rule: one specific detail beats ten generic compliments.
+
+FEELING LINE:
+One short sentence. What this moment means — without being dramatic.
+
+Good: "This is what we're building."
+Good: "Wouldn't trade this team for anything."
+Good: "Feels like just yesterday. Proud doesn't cover it."
+Bad: "We are truly blessed to have such wonderful people in our lives."
+Bad: "Our team is the heart and soul of everything we do."
+
+CTA:
+Tag the person. One warm engagement line.
+
+Good: "Happy anniversary [Name] — drop a heart for her in the comments."
+Good: "Welcome to the team [Name] — say hello!"
+Bad: "Please join us in wishing [Name] a very happy birthday and many more years of success."
+
+HOW IT SHOULD SOUND:
+Warm. Short. Real. Like a text message from someone who genuinely means it
+— not a corporate HR announcement.
+
+VISUAL RULES:
+- Real photo is non-negotiable — this post type dies without one
+- Smartphone quality is perfect — candid beats posed
+- The person should be visible and recognizable
+- AI-generated images are ABSOLUTELY NEVER acceptable
+
+FULL EXAMPLE (HVAC Company):
+"Today is Marcus's 2nd anniversary with the team.
+When Marcus started, he'd never touched an HVAC unit in his life. Two years
+later he's the first one on site and the last one to leave.
+Last week a customer called specifically to ask if Marcus would be the one
+coming out. That says everything.
+This is what we're building here. Happy anniversary Marcus — drop a heart
+for him in the comments."
+
+WHAT MAKES THIS EXAMPLE WORK:
+- Hook: "Marcus's 2nd anniversary" — person + moment in first 5 words
+- Specific detail: "notebook full of questions" / "first one on site, last to leave"
+- Proof of impact: the customer asking for him by name — shows, doesn't tell
+- Feeling line: "This is what we're building here" — understated, real
+- Under 80 words. Photo carries the rest.
+
+
+CONTENT TYPE: SOCIAL PROOF / CLIENT WIN POST
+----------------------------------------------
+What it is:
+A real result, review, or testimonial framed as a STORY — not just a
+star rating or a quote card.
+
+Target emotion: Trust / Relief — "they helped someone like me"
+
+HOOK RULES:
+Start with the CLIENT'S crisis or situation. Not your solution.
+
+Good: "Maria called us at 8pm on a Friday. Her basement was flooded. By 11pm, it was dry."
+Bad: "We recently helped a client with a flooding emergency."
+Bad: "Another happy customer!"
+
+STRUCTURE:
+- Hook: the client's problem (1 sentence — make it vivid)
+- Story: what happened, what you did (2-3 sentences)
+- Result: specific outcome — numbers, timeframe, client's own words
+- CTA: soft invitation
+
+The story format is key. A testimonial quote on a graphic is forgettable.
+A story about Maria's flooded basement at 8pm on a Friday is memorable.
+
+
+CONTENT TYPE: SCENARIO / STORY POST
+--------------------------------------
+What it is:
+A relatable "what if this happened to you" story. No real client names.
+Creates emotional connection to otherwise dry topics (insurance, legal).
+
+Target emotion: "That could be me" / Anxiety → Resolution
+
+HOOK RULES:
+Paint a vivid scene the reader sees themselves in.
+
+Good: "A family of four thought they were fully covered. Then the storm hit. Here's what their policy actually said."
+Bad: "Do you know what your insurance policy covers?"
+
+The power is in the specificity of the scenario — "family of four" not
+"a customer." The reader should picture their own family.
+
+
+CONTENT TYPE: AUTHORITY / OPINION POST
+----------------------------------------
+What it is:
+The business owner takes a clear stance on something in their industry.
+Not educational — opinionated. Builds expert positioning.
+
+Target emotion: Surprise / Respect — "I never thought of it that way"
+
+HOOK RULES:
+Take a contrarian stance. Challenge something people assume is true.
+
+Good: "Every contractor who tells you a roof repair can wait till spring is wrong. Here's why."
+Bad: "Here are some thoughts on when to repair your roof."
+
+The hook works because it disagrees with common advice. The reader wants
+to know why they're wrong.
+
+
+================================================================
+SECTION 3: TYPE IDENTITY CARDS
+================================================================
+For the remaining types, apply the universal principles from Section 1
+using the target emotion and hook strategy below.
+
+
+EDUCATIONAL / PRACTICAL VALUE
+  Emotion: "I didn't know that" / Self-protection
+  Hook strategy: Reveal a hidden risk or common mistake the reader is probably making
+  Structure: Hook (the mistake) → Value (1-3 actionable steps) → Why it matters → When to call a pro
+  Sound: Helpful expert sharing freely. No selling. If someone screenshots it, it worked.
+  Example: "3 signs your home's wiring needs inspection — before winter hits."
+
+COMMUNITY / LOCAL
+  Emotion: Belonging / Pride — "they're one of us"
+  Hook strategy: Name the specific place, neighborhood, event, or local moment
+  Structure: Hook (local reference) → Connection (why it matters to the business) → Warm closer
+  Sound: A neighbor talking, not a company marketing. Highest share rate among local audiences.
+  Example: "Proud to serve the Oak Park community for 8 years. Here's to 8 more."
+
+SOFT PROMOTIONAL
+  Emotion: Curiosity / Opportunity
+  Hook strategy: Lead with a useful tip or surprising fact. The offer comes SECOND.
+  Structure: Hook (value/tip) → Brief explanation → Soft offer mention → CTA
+  Sound: "Here's something useful — and by the way, we can help with that."
+  Hard rule: Value first, offer second, always. Max 20% of any calendar.
+  Example: "Most HVAC filters should be changed every 90 days. We're running a filter replacement special this month."
+
+BEHIND THE SCENES
+  Emotion: Authenticity / Connection
+  Hook strategy: Show the unglamorous, unpolished, real moment. No staging.
+  Structure: Hook (the moment) → Brief context (1 sentence) → Let the photo do the rest
+  Sound: Unpolished. Smartphone-shot. This authenticity signal outperforms polished content 3.2x.
+  Hard rule: Real photos only. AI images never acceptable.
+  Example: "6am crew loading up before the day starts."
+
+ORIGIN NETWORK
+  Emotion: Nostalgia / Loyalty
+  Hook strategy: Name the person, the specific moment, the milestone
+  Structure: Hook (person + milestone) → The story (1-2 sentences) → What it means now → Tag + CTA
+  Sound: Founder voice. Genuine pride without corporate polish.
+  Hard rule: Max 1-2 per month. Named individuals, real photos required.
+  Example: "Three years ago, [Name] was our very first customer. She took a chance on us when we were two guys and a van."
+
+SEASONAL / TIMELY
+  Emotion: Urgency / Relevance — "this applies to me RIGHT NOW"
+  Hook strategy: Connect the season/moment to the reader's life, not just your service
+  Structure: Hook (timely reference) → Why it matters NOW → Practical value → Soft CTA
+  Sound: Helpful and timely. Not "Happy Thanksgiving!" but "Thanksgiving is next week — here's the one thing to check before 15 people use your guest bathroom."
+  Example: "Temperatures drop below 30°F this week in [City]. Here are 3 things to check tonight before you go to bed."
+
+
+================================================================
+SECTION 4: GLOBAL HARD RULES
+================================================================
+
+1. Every post belongs to exactly ONE content type — no hybrid labeling
+2. Max 20% of any monthly calendar can be Soft Promotional
+3. Origin Network: max 1-2 per month
+4. No two consecutive posts of the same content type
+5. Transformation, Behind the Scenes, Origin Network, Human Moments → real photos ONLY
+6. Scenario/Story and Authority → text-heavy, no link in body, URL in first comment
+7. Never open any post with the business name
+8. Never use: "we are proud to," "seamless," "we specialize in," "quality service"
+9. Every hook must pass the test: would a stranger read the next line?
+10. Every post needs at least one specific detail — a number, name, date, or place
